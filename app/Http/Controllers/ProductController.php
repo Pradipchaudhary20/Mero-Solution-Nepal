@@ -36,7 +36,7 @@ class ProductController extends Controller
 
             $result['productAttrArr']=DB::table('products_attr')->where(['products_id'=>$id])->get();
 
-            $result['productImagesArr']=DB::table('products_images')->where(['products_id'=>$id])->get();
+            $productImagesArr=DB::table('product_images')->where(['products_id'=>$id])->get();
             
             if(!isset($productImagesArr[0])){
                 $result['productImagesArr']['0']['id']='';
@@ -78,7 +78,7 @@ class ProductController extends Controller
 
     public function manage_product_process(Request $request)
     {
-        //return $request->post();
+        
         if($request->post('id')>0){
             $image_validation="mimes:jpeg,jpg,png";
         }else{
@@ -87,9 +87,9 @@ class ProductController extends Controller
         $request->validate([
             'name'=>'required',
             'image'=>$image_validation,
-            'slug'=>'required|unique:products,slug,'.$request->post('id'),
-             $request->post('id'),
-             'attr_image.*' =>'mimes:jpg,jpeg,png'
+            'slug'=>'required|unique:products,slug,'.$request->post('id'), 
+            'attr_image.*' =>'mimes:jpg,jpeg,png',
+            'images.*' =>'mimes:jpg,jpeg,png'   
         ]);
 
         $paidArr=$request->post('paid'); 
@@ -139,12 +139,12 @@ class ProductController extends Controller
         $model->status=1;
         $model->save();
         $pid=$model->id;
-             /*Product Attr Start*/ 
-             $paidArr=$request->post('paid'); 
-             $skuArr=$request->post('sku'); 
-             $mrpArr=$request->post('mrp'); 
-             $priceArr=$request->post('price'); 
-             $qtyArr=$request->post('qty'); 
+        /*Product Attr Start*/ 
+            //  $paidArr=$request->post('paid'); 
+            //  $skuArr=$request->post('sku'); 
+            //  $mrpArr=$request->post('mrp'); 
+            //  $priceArr=$request->post('price'); 
+            //  $qtyArr=$request->post('qty'); 
              foreach($skuArr as $key=>$val){
              $productAttrArr['products_id']=$pid;
              $productAttrArr['sku']=$skuArr[$key];
@@ -164,15 +164,6 @@ class ProductController extends Controller
                 $productAttrArr['attr_image']='';
 
             }
-            // if($request->hasFile("attr_image.$key")){
-            //     $rand=rand('111111111','999999999');
-            //     $attr_image=$request->file("attr_image.$key");
-            //     $ext=$attr_image->extension();
-            //     $image_name=$rand.'.'.$ext;
-            //     $request->file("attr_image.$key")->storeAs('/public/media',$image_name);
-            //     $productAttrArr['attr_image']=$image_name;
-            // }
-
              if($paidArr[$key]!=''){
                      DB::table('products_attr')->where(['id'=>$paidArr[$key]])->update($productAttrArr);
                 }else{
@@ -182,8 +173,26 @@ class ProductController extends Controller
              }
              /*Product Attr End*/ 
 
+            /*Product Images Start*/ 
+            $piidArr=$request->post('piid'); 
+            foreach($piidArr as $key=>$val){
+            $productImageArr['products_id']=$pid;
+            if($request->hasFile("images.$key")){
+                $rand=rand('111111111','999999999');
+                $images=$request->file("images.$key");
+                $ext=$images->extension();
+                $image_name=$rand.'.'.$ext;
+                $request->file("images.$key")->storeAs('/public/media',$image_name);
+                $productImageArr['images']=$image_name;
+            }
 
-
+            if($piidArr[$key]!=''){
+                DB::table('product_images')->where(['id'=>$piidArr[$key]])->update($productImageArr);
+            }else{
+                DB::table('product_images')->insert($productImageArr);
+            }
+        }
+            /*Product Images end*/ 
         $request->session()->flash('message',$msg);
         return redirect('admin/product');
         
@@ -199,6 +208,11 @@ class ProductController extends Controller
         DB::table('products_attr')->where(['id'=>$paid])->delete();
         return redirect('admin/product/manage_product/'.$pid);
     }
+    public function product_images_delete(Request $request,$paid,$pid){
+        DB::table('product_images')->where(['id'=>$paid])->delete();
+        return redirect('admin/product/manage_product/'.$pid);
+    }
+    
     
 
     public function status(Request $request,$status,$id){

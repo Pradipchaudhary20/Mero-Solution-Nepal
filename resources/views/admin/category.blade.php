@@ -1,6 +1,6 @@
 @extends('admin/layout')
 @section('page_title','Category')
-@section('category_select','active')
+@section('Category_select','active')
 @section('container')
 {{session('message')}}
 <h1 class="mb10">Category</h1>
