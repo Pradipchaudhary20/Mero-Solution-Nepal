@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +24,7 @@ class ProductController extends Controller
             $result['name']=$arr['0']->name;
             $result['image']=$arr['0']->image;
             $result['slug']=$arr['0']->slug;
+            $result['brand']=$arr['0']->brand;
             $result['model']=$arr['0']->model;
             $result['short_desc']=$arr['0']->short_desc;
             $result['desc']=$arr['0']->desc;
@@ -51,6 +52,7 @@ class ProductController extends Controller
             $result['slug']='';
             $result['image']='';
             $result['model']='';
+            $result['brand']='';
             $result['short_desc']='';
             $result['desc']='';
             $result['keywords']='';
@@ -67,12 +69,18 @@ class ProductController extends Controller
             $result['productAttrArr'][0]['mrp']='';
             $result['productAttrArr'][0]['price']='';
             $result['productAttrArr'][0]['qty']='';
+            $result['productAttrArr'][0]['size_id']='';
+            $result['productAttrArr'][0]['color_id']='';
 
             $result['productImagesArr']['0']['id']='';
             $result['productImagesArr']['0']['images']='';
         }
 
         $result['category']=DB::table('categories')->where(['status'=>1])->get();
+        
+        $result['brands']=DB::table('brands')->where(['status'=>1])->get();
+        //return view('admin/manage_product',$result);
+        $result['colors']=DB::table('colors')->where(['status'=>1])->get();
         return view('admin/manage_product',$result);
     }
 
@@ -96,6 +104,8 @@ class ProductController extends Controller
         $skuArr=$request->post('sku'); 
         $mrpArr=$request->post('mrp'); 
         $priceArr=$request->post('price'); 
+        $size_idArr=$request->post('size_id'); 
+        $color_idArr=$request->post('color_id'); 
         $qtyArr=$request->post('qty');
         foreach($skuArr as $key=>$val){
             $check=DB::table('products_attr')->
@@ -130,6 +140,7 @@ class ProductController extends Controller
         $model->name=$request->post('name');
         $model->slug=$request->post('slug');
         $model->model=$request->post('model');
+        $model->brand=$request->post('brand');
         $model->short_desc=$request->post('short_desc');
         $model->desc=$request->post('desc');
         $model->keywords=$request->post('keywords');
@@ -140,18 +151,23 @@ class ProductController extends Controller
         $model->save();
         $pid=$model->id;
         /*Product Attr Start*/ 
-            //  $paidArr=$request->post('paid'); 
-            //  $skuArr=$request->post('sku'); 
-            //  $mrpArr=$request->post('mrp'); 
-            //  $priceArr=$request->post('price'); 
-            //  $qtyArr=$request->post('qty'); 
              foreach($skuArr as $key=>$val){
              $productAttrArr['products_id']=$pid;
              $productAttrArr['sku']=$skuArr[$key];
-             $productAttrArr['mrp']=$mrpArr[$key];
-             $productAttrArr['price']=$priceArr[$key];
-             $productAttrArr['qty']=$qtyArr[$key];
+             $productAttrArr['mrp']=(int)$mrpArr[$key];
+            $productAttrArr['price']=(int)$priceArr[$key];
+            $productAttrArr['qty']=(int)$qtyArr[$key];
+            // if($size_idArr[$key]==''){
+            //     $productAttrArr['size_id']=0;
+            // }else{
+            //     $productAttrArr['size_id']=$size_idArr[$key];
+            // }
 
+            if($color_idArr[$key]==''){
+                $productAttrArr['color_id']=0;
+            }else{
+                $productAttrArr['color_id']=$color_idArr[$key];
+            }
              //$productAttrArr['attr_image']='test';
             if($request->hasFile("attr_image.$key")){
                 $attr_image=$request ->file("attr_image.$key");
@@ -160,10 +176,10 @@ class ProductController extends Controller
                 $request->file("attr_image.$key")->storeAs('/public/media',$image_name);
                 $productAttrArr['attr_image']=$image_name;
             }
-            else{
-                $productAttrArr['attr_image']='';
+            // else{
+            //     $productAttrArr['attr_image']='';
 
-            }
+            // }
              if($paidArr[$key]!=''){
                      DB::table('products_attr')->where(['id'=>$paidArr[$key]])->update($productAttrArr);
                 }else{

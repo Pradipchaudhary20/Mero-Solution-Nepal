@@ -51,6 +51,28 @@
                                 <i class="fa-solid fa-list"></i>
                                 </i>Category</a>
                         </li>
+
+                        <li class="@yield('brand_select')">
+                            <a href="{{url('admin/brand')}}">
+                            <i class="fa fa-product-hunt"></i>
+                            </i>Brand</a>
+                        </li>
+
+                        <li class="@yield('color_select')">
+                            <a href="{{url('admin/color')}}">
+                            <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+
+                        <li class="@yield('product_select')">
+                            <a href="{{url('admin/product')}}">
+                            <i class="fa fa-product-hunt"></i>Product</a>
+                        </li>
+
+
+                        <li class="@yield('customer_select')">
+                            <a href="{{url('admin/customer')}}">
+                            <i class="fa fa-user"></i>Customer</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -79,11 +101,30 @@
                                 </i>Category
                             </a>
                         </li>
+                        <li class="@yield('brand_select')">
+                            <a href="{{url('admin/brand')}}">
+                            <i class="fa fa-code-branch"></i>
+                            </i>Brand</a>
+                        </li>
+
+                        
+                        <li class="@yield('color_select')">
+                            <a href="{{url('admin/color')}}">
+                            <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+                        
+
                         <li class="@yield('product_select')">
                             <a href="{{url('admin/product')}}">
                             <i class="fa fa-product-hunt" aria-hidden="true"></i>
                                 </i>Product</a>
                         </li>
+
+                        <li class="@yield('customer_select')">
+                            <a href="{{url('admin/customer')}}">
+                            <i class="fa fa-user"></i>Customer</a>
+                        </li>
+                        
                     </ul>
                 </nav>
             </div>

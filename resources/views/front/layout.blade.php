@@ -7,8 +7,7 @@
     <title>Mero Solution Nepal</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <link rel="stylesheet" href="css/style.css">
+    <link href="{{asset('front_assets/css/style.css')}}" rel="stylesheet" media="all">
 
 </head>
 <body>
@@ -23,7 +22,7 @@
     <div class="icons">
         <a href="#" class="fas fa-heart"></a>
         <a href="#" class="fas fa-shopping-cart"></a>
-        <a href="login.html" class="fas fa-user"></a>
+        <a href="http://127.0.0.1:8000/admin" class="fas fa-user"></a>
     </div>
 
 </header>
@@ -49,7 +48,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-1.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-1.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -64,7 +63,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-2.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-2.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -79,7 +78,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-3.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-3.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -94,7 +93,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-4.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-4.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -109,7 +108,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-5.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-5.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -124,7 +123,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-6.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-6.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -140,7 +139,7 @@
         <div class="box">
             
             <div class="image">
-                <img src="images/img-7.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-7.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -156,7 +155,7 @@
         <div class="box">
           
             <div class="image">
-                <img src="images/img-8.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-8.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -176,7 +175,7 @@
     <div class="box-container">
         <div class="box">
             <div class="image">
-                <img src="images/img-4.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-4.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -192,7 +191,7 @@
         <div class="box">
             
             <div class="image">
-                <img src="images/img-5.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-5.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -208,7 +207,7 @@
         <div class="box">
            
             <div class="image">
-                <img src="images/img-6.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-6.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -224,7 +223,7 @@
         <div class="box">
           
             <div class="image">
-                <img src="images/img-7.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-7.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>
@@ -239,7 +238,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/img-8.jpg" alt="">
+                <img src="{{asset('front_assets/images/img-8.jpg')}}" alt="">
                 <div class="icons">
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="cart-btn">add to cart</a>

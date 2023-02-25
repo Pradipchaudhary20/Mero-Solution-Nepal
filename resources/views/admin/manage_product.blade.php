@@ -90,7 +90,21 @@ Back
                                  @endforeach
                               </select>
                            </div>
-                           
+                           <div class="col-md-4">
+                              <label for="category_id" class="control-label mb-1"> Brand</label>
+                              <select id="brand" name="brand" class="form-control" required>
+                                 <option value="">Select Brand</option>
+                                 @foreach($brands as $list)
+                                 @if($brand==$list->id)
+                                 <option selected value="{{$list->id}}">
+                                    @else
+                                 <option value="{{$list->id}}">
+                                    @endif
+                                    {{$list->name}}
+                                 </option>
+                                 @endforeach
+                              </select>
+                           </div>
                            <div class="col-md-4">
                               <label for="model" class="control-label mb-1"> Model</label>
                               <input id="model" value="{{$model}}" name="model" type="text" class="form-control" aria-required="true" aria-invalid="false" required>
@@ -124,7 +138,7 @@ Back
                   </div>
                </div>
             </div>
-            
+
             <h2 class="mb10 ml15">Product Images</h2>
             <div class="col-lg-12">
                <div class="card">
@@ -196,6 +210,21 @@ Back
                               <label for="price" class="control-label mb-1"> Price</label>
                               <input id="price" name="price[]" type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{$pAArr['price']}}" required>
                            </div>
+
+                           <div class="col-md-3">
+                              <label for="color_id" class="control-label mb-1"> Color</label>
+                              <select id="color_id" name="color_id[]" class="form-control">
+                                 <option value="">Select</option>
+                                 @foreach($colors as $list)
+                                    @if($pAArr['color_id']==$list->id)
+                                    <option value="{{$list->id}}" selected>{{$list->color}}</option>
+                                    @else
+                                    <option value="{{$list->id}}">{{$list->color}}</option>
+                                    @endif
+                                 @endforeach
+                              </select>
+                           </div>
+
                            <div class="col-md-2">
                               <label for="qty" class="control-label mb-1"> Qty</label>
                               <input id="qty" name="qty[]" type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{$pAArr['qty']}}" required>
@@ -249,6 +278,10 @@ Back
        html+='<div class="col-md-2"><label for="mrp" class="control-label mb-1"> MRP</label><input id="mrp" name="mrp[]" type="text" class="form-control" aria-required="true" aria-invalid="false" required></div>'; 
 
        html+='<div class="col-md-2"><label for="price" class="control-label mb-1"> Price</label><input id="price" name="price[]" type="text" class="form-control" aria-required="true" aria-invalid="false" required></div>';
+       
+       var color_id_html=jQuery('#color_id').html(); 
+       color_id_html = color_id_html.replace("selected", "");
+       html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1"> Color</label><select id="color_id" name="color_id[]" class="form-control" >'+color_id_html+'</select></div>';
 
        html+='<div class="col-md-2"><label for="qty" class="control-label mb-1"> Qty</label><input id="qty" name="qty[]" type="text" class="form-control" aria-required="true" aria-invalid="false" required></div>';
 
