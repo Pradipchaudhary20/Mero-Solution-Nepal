@@ -27,7 +27,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="CoolAdmin" />
+                            <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="Mero Solution Nepal" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -83,7 +83,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="Cool Admin" />
+                    <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="Mero Solution Nepal" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -123,6 +123,11 @@
                         <li class="@yield('customer_select')">
                             <a href="{{url('admin/customer')}}">
                             <i class="fa fa-user"></i>Customer</a>
+                        </li>
+
+                        <li class="@yield('home_banner_select')">
+                            <a href="{{url('admin/home_banner')}}">
+                            <i class="fas fa-images"></i>Home Banner</a>
                         </li>
                         
                     </ul>

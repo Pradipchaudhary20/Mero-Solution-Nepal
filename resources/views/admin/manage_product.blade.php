@@ -85,7 +85,7 @@ Back
                                     @else
                                  <option value="{{$list->id}}">
                                     @endif
-                                    {{$list->Category_name}}
+                                    {{$list->category_name}}
                                  </option>
                                  @endforeach
                               </select>
@@ -134,6 +134,47 @@ Back
                      <div class="form-group">
                         <label for="warranty" class="control-label mb-1"> Warranty</label>
                         <textarea id="warranty" name="warranty" type="text" class="form-control" aria-required="true" aria-invalid="false" required>{{$warranty}}</textarea>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                        <div class="row">
+                           <div class="col-md-3">
+                              <label for="model" class="control-label mb-1"> IS Featured	</label>
+                              <select id="is_featured" name="is_featured" class="form-control" required>
+                     @if($is_featured=='1')
+                     <option value="1" selected>Yes</option>
+                     <option value="0">No</option>
+                     @else
+                     <option value="1">Yes</option>
+                     <option value="0" selected>No</option>
+                     @endif
+                              </select>
+                           </div>
+                           <div class="col-md-3">
+                              <label for="model" class="control-label mb-1"> IS Tranding	</label>
+                              <select id="is_tranding" name="is_tranding" class="form-control" required>
+                     @if($is_tranding=='1')
+                     <option value="1" selected>Yes</option>
+                     <option value="0">No</option>
+                     @else
+                     <option value="1">Yes</option>
+                     <option value="0" selected>No</option>
+                     @endif
+                              </select>
+                           </div>
+                           <div class="col-md-3">
+                              <label for="model" class="control-label mb-1"> IS Discounted	</label>
+                              <select id="is_discounted" name="is_discounted" class="form-control" required>
+                     @if($is_discounted=='1')
+                     <option value="1" selected>Yes</option>
+                     <option value="0">No</option>
+                     @else
+                     <option value="1">Yes</option>
+                     <option value="0" selected>No</option>
+                     @endif
+                              </select>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
