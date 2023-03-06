@@ -262,14 +262,14 @@
             <input type="password" placeholder="Password">
             <button class="aa-browse-btn" type="submit">Login</button>
             <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-            <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
+            <p class="aa-lost-password"><a href="#">Forgot Password</a></p>
             <div class="aa-register-now">
-              Don't have an account?<a href="javascript:void(0)">Register now!</a>
+              Don't have an account?<a href="{{url('registration')}}">Register now!</a>
             </div>
           </form>
         </div>                        
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+      </div>
+    </div>
   </div>    
 
   <!-- jQuery library -->

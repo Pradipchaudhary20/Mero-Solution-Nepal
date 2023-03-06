@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Crypt;
 
 class FrontController extends Controller
 {
@@ -326,5 +328,39 @@ class FrontController extends Controller
         return view('front.search',$result);
     }
     
+    public function registration(Request $request)
+    {
+        $result=[];
+        return view('front.registration',$result);
+    }
+    
+    public function registration_process(Request $request)
+    {
+       $valid=Validator::make($request->all(),[
+            "name"=>'required',
+            "email"=>'required|email|unique:customers,email',
+            "password"=>'required',
+            "mobile"=>'required|numeric|digits:10',
+       ]);
+
+       if(!$valid->passes()){
+            return response()->json(['status'=>'error','error'=>$valid->errors()->toArray()]);
+       }else{
+            $arr=[
+                "name"=>$request->name,
+                "email"=>$request->email,
+                "password"=>Crypt::encrypt($request->password),
+                "mobile"=>$request->mobile,
+                "status"=>1,
+                "created_at"=>date('Y-m-d h:i:s'),
+                "updated_at"=>date('Y-m-d h:i:s')
+            ];
+            $query=DB::table('customers')->insert($arr);
+            if($query){
+                return response()->json(['status'=>'success','msg'=>"Registration successfully"]);
+            }
+
+       }
+    }
     
 }

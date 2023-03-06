@@ -2382,6 +2382,7 @@ h2 {
 /*---- Login form ----*/
 
 .aa-login-form input[type="text"],
+.aa-login-form input[type="email"],
 .aa-login-form input[type="password"] {
   border: 1px solid #ccc;
   font-size: 16px;
@@ -3466,4 +3467,8 @@ h2 {
 }
 .left_cat_active{
   color:#ff6666;
+}
+.field_error{
+  color:red;
+  margin-top:-17px
 }
