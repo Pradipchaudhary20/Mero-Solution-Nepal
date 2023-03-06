@@ -296,5 +296,35 @@ class FrontController extends Controller
             ->get();
         return view('front.cart',$result);
     }
+
+    public function search(Request $request,$str)
+    {
+        $result['product']=
+            $query=DB::table('products');
+            $query=$query->leftJoin('categories','categories.id','=','products.category_id');
+            $query=$query->leftJoin('products_attr','products.id','=','products_attr.products_id');
+            $query=$query->where(['products.status'=>1]);
+            $query=$query->where('name','like',"%$str%");
+            $query=$query->orwhere('model','like',"%$str%");
+            $query=$query->orwhere('short_desc','like',"%$str%");
+            $query=$query->orwhere('desc','like',"%$str%");
+            $query=$query->orwhere('keywords','like',"%$str%");
+            $query=$query->orwhere('technical_specification','like',"%$str%") ;
+            $query=$query->distinct()->select('products.*');
+            $query=$query->get();
+            $result['product']=$query;
+            
+            foreach($result['product'] as $list1){
+               
+                $query1=DB::table('products_attr');
+                $query1=$query1->leftJoin('colors','colors.id','=','products_attr.color_id');
+                $query1=$query1->where(['products_attr.products_id'=>$list1->id]);
+                $query1=$query1->get();
+                $result['product_attr'][$list1->id]=$query1;
+            }
+        
+        return view('front.search',$result);
+    }
+    
     
 }

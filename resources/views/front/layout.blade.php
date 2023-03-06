@@ -137,11 +137,11 @@
               <!-- search box -->
               <div class="aa-search-box">
                 <form action="">
-                  <input type="text" name="" id="" placeholder=" Search Here">
-                  <button type="submit"><span class="fa fa-search"></span></button>
+                  <input type="text" id="search_str" placeholder="Search here">
+                  <button type="button" onclick="funSearch()"><span class="fa fa-search"></span></button>
                 </form>
               </div>
-              <!-- / search box -->             
+              <!-- / search box -->              
             </div>
           </div>
         </div>
