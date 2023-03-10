@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 use Crypt;
-
+use Mail;
 class FrontController extends Controller
 {
     public function index(Request $request)
@@ -217,7 +218,7 @@ class FrontController extends Controller
     public function add_to_cart(Request $request)
     {
         if($request->session()->has('FRONT_USER_LOGIN')){
-            $uid=$request->session()->get('FRONT_USER_LOGIN');
+            $uid=$request->session()->get('FRONT_USER_ID');
             $user_type="Reg";
         }else{
             $uid=getUserTempId();
@@ -282,7 +283,7 @@ class FrontController extends Controller
     public function cart(Request $request)
     {
         if($request->session()->has('FRONT_USER_LOGIN')){
-            $uid=$request->session()->get('FRONT_USER_LOGIN');
+            $uid=$request->session()->get('FRONT_USER_ID');
             $user_type="Reg";
         }else{
             $uid=getUserTempId();
@@ -327,9 +328,13 @@ class FrontController extends Controller
         
         return view('front.search',$result);
     }
-    
+
     public function registration(Request $request)
     {
+        if($request->session()->has('FRONT_USER_LOGIN')!=null){
+            return redirect('/');
+        }
+        
         $result=[];
         return view('front.registration',$result);
     }
@@ -346,21 +351,194 @@ class FrontController extends Controller
        if(!$valid->passes()){
             return response()->json(['status'=>'error','error'=>$valid->errors()->toArray()]);
        }else{
+            $rand_id=rand(111111111,999999999);
             $arr=[
                 "name"=>$request->name,
                 "email"=>$request->email,
                 "password"=>Crypt::encrypt($request->password),
                 "mobile"=>$request->mobile,
                 "status"=>1,
+                "is_verify"=>0,
+                "rand_id"=>$rand_id,
                 "created_at"=>date('Y-m-d h:i:s'),
                 "updated_at"=>date('Y-m-d h:i:s')
             ];
             $query=DB::table('customers')->insert($arr);
             if($query){
-                return response()->json(['status'=>'success','msg'=>"Registration successfully"]);
+
+                $data=['name'=>$request->name,'rand_id'=>$rand_id];
+                $user['to']=$request->email;
+                Mail::send('front/email_verification',$data,function($messages) use ($user){
+                    $messages->to($user['to']);
+                    $messages->subject('Email Id Verification');
+                });
+
+                return response()->json(['status'=>'success','msg'=>"Registration successfully. Please check your email id for verification"]);
             }
 
        }
     }
+
+    public function login_process(Request $request)
+    {
+       
+        $result=DB::table('customers')  
+            ->where(['email'=>$request->str_login_email])
+            ->get(); 
+        
+        if(isset($result[0])){
+            $db_pwd=Crypt::decrypt($result[0]->password);
+            $status=$result[0]->status;
+            $is_verify=$result[0]->is_verify;
+
+            if($is_verify==0){
+                return response()->json(['status'=>"error",'msg'=>'Please verify your email id']); 
+            }
+            if($status==0){
+                return response()->json(['status'=>"error",'msg'=>'Your account has been deactivated']); 
+            }
+
+
+
+            if($db_pwd==$request->str_login_password){
+
+                if($request->rememberme===null){
+                    setcookie('login_email',$request->str_login_email,100);
+                    setcookie('login_pwd',$request->str_login_password,100);
+                }else{
+                   setcookie('login_email',$request->str_login_email,time()+60*60*24*100);
+                   setcookie('login_pwd',$request->str_login_password,time()+60*60*24*100);
+                }
+
+                $request->session()->put('FRONT_USER_LOGIN',true);
+                $request->session()->put('FRONT_USER_ID',$result[0]->id);
+                $request->session()->put('FRONT_USER_NAME',$result[0]->name);
+                $status="success";
+                $msg="";
+
+                $getUserTempId=getUserTempId();
+                DB::table('cart')  
+                    ->where(['user_id'=>$getUserTempId,'user_type'=>'Not-Reg'])
+                    ->update(['user_id'=>$result[0]->id,'user_type'=>'Reg']);
+
+            }else{
+                $status="error";
+                $msg="Please enter valid password";
+            }
+        }else{
+            $status="error";
+            $msg="Please enter valid email id";
+        }
+       return response()->json(['status'=>$status,'msg'=>$msg]); 
+       //$request->password
+    }
+    
+    public function email_verification(Request $request,$id)
+    {
+        $result=DB::table('customers')  
+            ->where(['rand_id'=>$id])
+            ->get(); 
+
+        if(isset($result[0])){
+            DB::table('customers')  
+            ->where(['id'=>$result[0]->id])
+            ->update(['is_verify'=>1,'rand_id'=>'']);
+        return view('front.verification');
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function forgot_password(Request $request)
+    {
+        
+        $result=DB::table('customers')  
+            ->where(['email'=>$request->str_forgot_email])
+            ->get(); 
+        $rand_id=rand(111111111,999999999);
+        if(isset($result[0])){
+
+            DB::table('customers')  
+                ->where(['email'=>$request->str_forgot_email])
+                ->update(['is_forgot_password'=>1,'rand_id'=>$rand_id]);
+
+            $data=['name'=>$result[0]->name,'rand_id'=>$rand_id];
+            $user['to']=$request->str_forgot_email;
+            Mail::send('front/forgot_email',$data,function($messages) use ($user){
+                $messages->to($user['to']);
+                $messages->subject("Forgot Password");
+            });
+            return response()->json(['status'=>'success','msg'=>'Please check your email for password']); 
+        }else{
+            return response()->json(['status'=>'error','msg'=>'Email id not registered']); 
+        }
+    }
+
+
+    public function forgot_password_change(Request $request,$id)
+    {
+        $result=DB::table('customers')  
+            ->where(['rand_id'=>$id])
+            ->where(['is_forgot_password'=>1])
+            ->get(); 
+
+        if(isset($result[0])){
+            $request->session()->put('FORGOT_PASSWORD_USER_ID',$result[0]->id);
+        
+            return view('front.forgot_password_change');
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function forgot_password_change_process(Request $request)
+    {
+        DB::table('customers')  
+            ->where(['id'=>$request->session()->get('FORGOT_PASSWORD_USER_ID')])
+            ->update(
+                [
+                    'is_forgot_password'=>0,
+                    'password'=>Crypt::encrypt($request->password)   ,
+                    'rand_id'=>''
+                ]
+            ); 
+        return response()->json(['status'=>'success','msg'=>'Password changed']);     
+    }
+
+    public function checkout(Request $request)
+    {
+        $result['cart_data']=getAddToCartTotalItem();
+
+        if(isset($result['cart_data'][0])){
+
+            if($request->session()->has('FRONT_USER_LOGIN')){
+                $uid=$request->session()->get('FRONT_USER_ID');
+                $customer_info=DB::table('customers')  
+                    ->where(['id'=> $uid])
+                     ->get(); 
+                $result['customers']['name']=$customer_info[0]->name;
+                $result['customers']['email']=$customer_info[0]->email;
+                $result['customers']['mobile']=$customer_info[0]->mobile;
+                $result['customers']['address']=$customer_info[0]->address;
+                $result['customers']['city']=$customer_info[0]->city;
+                $result['customers']['state']=$customer_info[0]->state;
+                $result['customers']['zip']=$customer_info[0]->zip;
+            }else{
+                $result['customers']['name']='';
+                $result['customers']['email']='';
+                $result['customers']['mobile']='';
+                $result['customers']['address']='';
+                $result['customers']['city']='';
+                $result['customers']['state']='';
+                $result['customers']['zip']='';
+
+            }
+
+            return view('front.checkout',$result);
+        }else{
+            return redirect('/');
+        }
+    }
+ 
     
 }

@@ -38,7 +38,6 @@
                         <td><a class="remove" href="javascript:void(0)" onclick="deleteCartProduct('{{$data->pid}}','{{$data->color}}','{{$data->attr_id}}')"><fa class="fa fa-close"></fa></a></td>
                         <td><a href="{{url('product/'.$data->slug)}}"><img src="{{asset('storage/media/'.$data->image)}}" alt="img"></a></td>
                         <td><a class="aa-cart-title" href="{{url('product/'.$data->slug)}}">{{$data->name}}</a>
-                       
                         @if($data->color!='')
                         <br/>COLOR: {{$data->color}}
                         @endif
@@ -50,7 +49,8 @@
                       @endforeach
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
-                          <input class="aa-cart-view-btn" type="button" value="Checkout">
+                          
+                          <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/checkout')}}"><input class="aa-cart-view-btn" type="button" value="Checkout"></a>
                         </td>
                       </tr>
                       </tbody>
@@ -60,7 +60,6 @@
                   <h3>Cart empty</h3>
                 @endif  
              </form>
-             <!-- Cart Total view -->
            
 		   </div>
          </div>

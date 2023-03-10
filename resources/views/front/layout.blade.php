@@ -34,10 +34,7 @@
         <span>Loading</span>
       </div>
     </div> 
-    <!-- / wpf loader Two -->       
-  <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
-  <!-- END SCROLL TOP BUTTON -->
 
 
   <!-- Start header section -->
@@ -51,11 +48,7 @@
               <!-- start header top left -->
               <div class="aa-header-top-left">
                 
-                <!-- start cellphone -->
-                <!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-                <!-- / cellphone -->
+               
               </div>
               <!-- / header top left -->
               <div class="aa-header-top-right">
@@ -63,8 +56,12 @@
                   <li><a href="javascript:void(0)">My Account</a></li>
                   
                   <li class="hidden-xs"><a href="{{url('/cart')}}">My Cart</a></li>
-                  <li class="hidden-xs"><a href="javascript:void(0)">Checkout</a></li>
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                  <li class="hidden-xs"><a href="{{url('/checkout')}}">Checkout</a></li>
+                  @if(session()->has('FRONT_USER_LOGIN')!=null)
+                  <li><a href="{{url('/logout')}}">Logout</a></li>
+                  @else
+                    <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                  @endif
                 </ul>
               </div>
             </div>
@@ -128,7 +125,7 @@
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/checkout')}}">Checkout</a>
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/cart')}}">Cart</a>
                
                 @endif
                 </div>
@@ -246,7 +243,18 @@
       </div>
      </div>
     </div>
-    
+    @php
+  if(isset($_COOKIE['login_email']) && isset($_COOKIE['login_pwd'])){
+    $login_email=$_COOKIE['login_email'];
+    $login_pwd=$_COOKIE['login_pwd'];
+    $is_remember="checked='checked'";
+  } else{
+    $login_email='';
+    $login_pwd='';
+    $is_remember="";
+  }   
+
+  @endphp  
 
   <!-- Login Modal -->  
   <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -254,19 +262,42 @@
       <div class="modal-content">                      
         <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4>Login or Register</h4>
-          <form class="aa-login-form" action="">
-            <label for="">Username or Email address<span>*</span></label>
-            <input type="text" placeholder="Username or email">
-            <label for="">Password<span>*</span></label>
-            <input type="password" placeholder="Password">
-            <button class="aa-browse-btn" type="submit">Login</button>
-            <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-            <p class="aa-lost-password"><a href="#">Forgot Password</a></p>
-            <div class="aa-register-now">
-              Don't have an account?<a href="{{url('registration')}}">Register now!</a>
-            </div>
-          </form>
+          <div id="popup_login">
+            <h4>Login or Register</h4>
+            <form class="aa-login-form" id="frmLogin">
+              <label for="">Email address<span>*</span></label>
+              <input type="email" placeholder="Email" name="str_login_email" required value="{{$login_email}}">
+              <label for="">Password<span>*</span></label>
+              <input type="password" placeholder="Password" name="str_login_password" required value="{{$login_pwd}}">
+              <button class="aa-browse-btn" type="submit" id="btnLogin">Login</button>
+              <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme" name="rememberme" {{$is_remember}}> Remember me </label>
+
+              <div id="login_msg"></div>
+
+              <p class="aa-lost-password"><a href="javascript:void(0)" onclick="forgot_password()">Forgot Password ?</a></p>
+              
+              <div class="aa-register-now">
+                Don't have an account?<a href="{{url('registration')}}">Register now!</a>
+              </div>
+              @csrf
+            </form>
+          </div>
+          <div id="popup_forgot" style="display:none;">
+            <h4>Forgot Password</h4>
+            <form class="aa-login-form" id="frmForgot">
+              <label for="">Email address<span>*</span></label>
+              <input type="email" placeholder="Email" name="str_forgot_email" required>
+              <button class="aa-browse-btn" type="submit" id="btnForgot">Submit</button>
+              <br><br>
+              <div id="forgot_msg"></div>
+             
+              <div class="aa-register-now">
+                Login Form?<a href="javascript:void(0)" onclick="show_login_popup()">Login now!</a>
+              </div>
+              @csrf
+            </form>
+          </div>
+
         </div>                        
       </div>
     </div>

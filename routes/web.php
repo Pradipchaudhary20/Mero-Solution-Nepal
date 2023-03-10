@@ -28,6 +28,20 @@ Route::get('cart',[FrontController::class,'cart']);
 Route::get('search/{str}',[FrontController::class,'search']);
 Route::get('registration',[FrontController::class,'registration']);
 Route::post('registration_process',[FrontController::class,'registration_process'])->name('registration.registration_process');
+Route::post('login_process',[FrontController::class,'login_process'])->name('login.login_process');
+Route::get('logout', function () {
+    session()->forget('FRONT_USER_LOGIN');
+    session()->forget('FRONT_USER_ID');
+    session()->forget('FRONT_USER_NAME');
+    session()->forget('USER_TEMP_ID');
+    return redirect('/');
+});
+Route::get('/verification/{id}',[FrontController::class,'email_verification']);
+Route::post('forgot_password',[FrontController::class,'forgot_password']);
+Route::get('/forgot_password_change/{id}',[FrontController::class,'forgot_password_change']);
+Route::post('forgot_password_change_process',[FrontController::class,'forgot_password_change_process']);
+Route::get('/checkout',[FrontController::class,'checkout']);
+
 
 
 

@@ -385,7 +385,7 @@ function add_to_cart(id,color_str_id){
          
         }
         html+='<li><span class="aa-cartbox-total-title">Total</span><span class="aa-cartbox-total-price">Rs '+totalPrice+'</span></li>';
-        html+='</ul><a class="aa-cartbox-checkout aa-primary-btn" href="checkout">Checkout</a>';
+        html+='</ul><a class="aa-cartbox-checkout aa-primary-btn" href="cart">Cart</a>';
         console.log(html);
         jQuery('.aa-cartbox-summary').html(html);
       }
@@ -457,6 +457,89 @@ jQuery('#frmRegistration').submit(function(e){
         jQuery('#frmRegistration')[0].reset();
         jQuery('#thank_you_msg').html(result.msg);
       }
+    }
+  });
+});
+
+// jQuery('#frmLogin').submit(function(e){
+//   jQuery('#login_msg').html("");
+//   e.preventDefault();
+//   jQuery.ajax({
+//     url:'/login_process',
+//     data:jQuery('#frmLogin').serialize(),
+//     type:'post',
+//     success:function(result){
+//       if(result.status=="error"){
+//         jQuery('#login_msg').html(result.msg);
+//       }
+      
+//       if(result.status=="success"){
+//        window.location.href='/'
+//       }
+//     }
+//   });
+// });
+
+
+jQuery('#frmLogin').submit(function(e){
+  jQuery('#login_msg').html("");
+  e.preventDefault();
+  jQuery.ajax({
+    url:'/login_process',
+    data:jQuery('#frmLogin').serialize(),
+    type:'post',
+    success:function(result){
+      if(result.status=="error"){
+        jQuery('#login_msg').html(result.msg);
+      }
+      
+      if(result.status=="success"){
+       window.location.href=window.location.href;
+        //jQuery('#frmLogin')[0].reset();
+        //jQuery('#thank_you_msg').html(result.msg);
+      }
+    }
+  });
+});
+
+
+function forgot_password(){
+  jQuery('#popup_forgot').show();
+  jQuery('#popup_login').hide();
+}
+
+function show_login_popup(){
+  jQuery('#popup_forgot').hide();
+  jQuery('#popup_login').show();
+}
+
+jQuery('#frmForgot').submit(function(e){
+  jQuery('#forgot_msg').html("Please wait...");
+  
+  e.preventDefault();
+  jQuery.ajax({
+    url:'/forgot_password',
+    data:jQuery('#frmForgot').serialize(),
+    type:'post',
+    success:function(result){
+      console.log(result);
+      jQuery('#forgot_msg').html(result.msg);
+    }
+  });
+});
+
+jQuery('#frmUpdatePassword').submit(function(e){
+  jQuery('#thank_you_msg').html("Please wait...");
+  jQuery('#thank_you_msg').html("");
+  e.preventDefault();
+  jQuery.ajax({
+    url:'/forgot_password_change_process',
+    data:jQuery('#frmUpdatePassword').serialize(),
+    type:'post',
+    success:function(result){
+      console.log(result);
+      jQuery('#frmUpdatePassword')[0].reset();
+      jQuery('#thank_you_msg').html(result.msg);
     }
   });
 });
