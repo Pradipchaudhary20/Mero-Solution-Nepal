@@ -18,7 +18,7 @@
      <div class="row">
        <div class="col-md-12">
         <div class="checkout-area">
-          <form action="">
+          <form id="frmPlaceOrder">
             <div class="row">
               <div class="col-md-8">
                 <div class="checkout-left">
@@ -62,7 +62,7 @@
                           <div class="row">
                             <div class="col-md-12">
                               <div class="aa-checkout-single-bill">
-                                <textarea cols="8" rows="3" name="address" required>{{$customers['address']}}</textarea>
+                                <textarea cols="8" rows="3" name="address" required placeholder="Enter Address*">{{$customers['address']}}</textarea>
                               </div>                             
                             </div>                            
                           </div>   
@@ -82,7 +82,8 @@
                                 <input type="text" placeholder="Postcode / ZIP*" value="{{$customers['zip']}}" name="zip" required>
                               </div>
                             </div>
-                          </div>              
+                          </div>   
+                                       
                         </div>
                       </div>
                     </div>
@@ -120,34 +121,43 @@
                         @endforeach
                       </tbody>
                       <tfoot>
+                        <tr class="hide show_coupon_box">
+                          <th>Coupon Code <a href="javascript:void(0)" onclick="remove_coupon_code()" class="remove_coupon_code_link">Remove</a></th>
+                          <td id="coupon_code_str"></td>
+                        </tr>
                          <tr>
                           <th>Total</th>
-                          <td>RS {{$totalPrice}}</td>
+                          <td id="total_price">Rs {{$totalPrice}}</td>
                         </tr>
                       </tfoot>
                     </table>
                   </div>
-				  <h4>Coupon Code</h4>
-                  <div class="aa-payment-method coupon_code">                    
-                    <input type="text" placeholder="Coupon Code" class="aa-coupon-code">
-					<input type="submit" value="Apply Coupon" class="aa-browse-btn">              
-                  </div>
-				  <br/>
+                  <h4>Coupon Code</h4>
+                    <div class="aa-payment-method coupon_code">                    
+                      <input type="text" placeholder="Coupon Code" class="aa-coupon-code apply_coupon_code_box" name="coupon_code" id="coupon_code">
+                      <input type="button" value="Apply Coupon" class="aa-browse-btn apply_coupon_code_box" onclick="applyCouponCode()">   
+                      <div id="coupon_code_msg"></div>           
+                    </div>
+                  <br/>
                   <h4>Payment Method</h4>
                   <div class="aa-payment-method">                    
-                    <label for="cashdelivery"><input type="radio" id="cashdelivery" name="optionsRadios"> Cash on Delivery </label>
-                    <label for="paypal"><input type="radio" id="paypal" name="optionsRadios" checked> Via Esewa or khalti</label>
-                    <!-- <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark">     -->
-                    <input type="submit" value="Place Order" class="aa-browse-btn">                
+                    <label for="cod"><input type="radio" id="cod" name="payment_type" value="COD" checked> Cash on Delivery </label>
+                    <label for="esewa">
+                    <input type="radio" id="esewa" name="payment_type" value="Gateway"> Via Esewa </label>
+                    
+                    <input type="submit" value="Place Order" class="aa-browse-btn" id="btnPlaceOrder">                
                   </div>
+
+                  <div id="order_place_msg"></div>
                 </div>
               </div>
             </div>
+            @csrf  
           </form>
          </div>
        </div>
      </div>
    </div>
  </section>
-   
+ 
 @endsection

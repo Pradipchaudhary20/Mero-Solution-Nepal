@@ -1,12 +1,3 @@
-/*!
- * SmartMenus jQuery Plugin Bootstrap Addon - v0.3.0 - January 27, 2016
- * http://www.smartmenus.org/
- *
- * Copyright Vasil Dinkov, Vadikom Web Ltd.
- * http://vadikom.com
- *
- * Licensed MIT
- */
 
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {

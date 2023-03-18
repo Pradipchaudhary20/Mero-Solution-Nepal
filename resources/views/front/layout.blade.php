@@ -54,9 +54,9 @@
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
                   <li><a href="javascript:void(0)">My Account</a></li>
-                  
+                  <li><a href="{{url('/order')}}">My Order</a></li>
                   <li class="hidden-xs"><a href="{{url('/cart')}}">My Cart</a></li>
-                  <li class="hidden-xs"><a href="{{url('/checkout')}}">Checkout</a></li>
+                  <!-- <li class="hidden-xs"><a href="{{url('/checkout')}}">Checkout</a></li> -->
                   @if(session()->has('FRONT_USER_LOGIN')!=null)
                   <li><a href="{{url('/logout')}}">Logout</a></li>
                   @else
@@ -95,7 +95,7 @@
               @endphp 
               <div class="aa-cartbox">
                 <a class="aa-cart-link" href="#" id="cartBox">
-                  <span class="fa fa-shopping-basket"></span>
+                  <span class="fa fa-shopping-basket"></span>                 
                   <span class="aa-cart-title">SHOPPING CART</span>
                   <span class="aa-cart-notify">{{$totalCartItem}}</span>
                 </a>

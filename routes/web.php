@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\front\FrontController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeBannerController;
+use App\Http\Controllers\Admin\OrderController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,13 @@ Route::post('forgot_password',[FrontController::class,'forgot_password']);
 Route::get('/forgot_password_change/{id}',[FrontController::class,'forgot_password_change']);
 Route::post('forgot_password_change_process',[FrontController::class,'forgot_password_change_process']);
 Route::get('/checkout',[FrontController::class,'checkout']);
+Route::post('place_order',[FrontController::class,'place_order']);
+Route::get('/order_placed',[FrontController::class,'order_placed']);
+Route::get('/order_fail',[FrontController::class,'order_fail']);
+Route::group(['middleware'=>'user_auth'],function(){
+    Route::get('/order',[FrontController::class,'order']);
+    Route::get('/order_detail/{id}',[FrontController::class,'order_detail']);
+});
 
 
 
@@ -93,6 +101,12 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/home_banner/manage_home_banner_process',[HomeBannerController::class,'manage_home_banner_process'])->name('home_banner.manage_home_banner_process');
     Route::get('admin/home_banner/delete/{id}',[HomeBannerController::class,'delete']);
     Route::get('admin/home_banner/status/{status}/{id}',[HomeBannerController::class,'status']);
+
+    Route::get('admin/order',[OrderController::class,'index']);
+    Route::get('admin/order_detail/{id}',[OrderController::class,'order_detail']);
+    Route::post('admin/order_detail/{id}',[OrderController::class,'update_track_detail']);
+    Route::get('admin/update_payemnt_status/{status}/{id}',[OrderController::class,'update_payemnt_status']);
+    Route::get('admin/update_order_status/{status}/{id}',[OrderController::class,'update_order_status']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

@@ -539,6 +539,107 @@ class FrontController extends Controller
             return redirect('/');
         }
     }
+    public function place_order(Request $request)
+    {
+        if($request->session()->has('FRONT_USER_LOGIN')){
+            $coupon_value=0;
+            if($request->coupon_code!=''){
+                $arr=apply_coupon_code($request->coupon_code);
+                $arr=json_decode($arr,true);
+                if($arr['status']=='success'){
+                    $coupon_value=$arr['coupon_code_value'];
+                }else{
+                    return response()->json(['status'=>'false','msg'=>$arr['msg']]);
+                }
+            }
+            
+
+            $uid=$request->session()->get('FRONT_USER_ID');
+            $totalPrice=0;
+            $getAddToCartTotalItem=getAddToCartTotalItem();
+            foreach($getAddToCartTotalItem as $list){
+                $totalPrice=$totalPrice+($list->qty*$list->price);
+            }  
+            $arr=[
+                "customers_id"=>$uid,
+                "name"=>$request->name,
+                "email"=>$request->email,
+                "mobile"=>$request->mobile,
+                "address"=>$request->address,
+                "city"=>$request->city,
+                "state"=>$request->state,
+                "pincode"=>$request->zip,
+                "coupon_code"=>$request->coupon_code,
+                "coupon_value"=>$coupon_value,
+                "payment_type"=>$request->payment_type,
+                "payment_status"=>"Pending",
+                "total_amt"=>$totalPrice,
+                "order_status"=>1,
+                "added_on"=>date('Y-m-d h:i:s')
+            ];
+            $order_id=DB::table('orders')->insertGetId($arr);
+
+            if($order_id>0){
+                foreach($getAddToCartTotalItem as $list){
+                    $prductDetailArr['product_id']=$list->pid;
+                    $prductDetailArr['products_attr_id']=$list->attr_id;
+                    $prductDetailArr['price']=$list->price;
+                    $prductDetailArr['qty']=$list->qty;
+                    $prductDetailArr['orders_id']=$order_id;
+                    DB::table('orders_details')->insert($prductDetailArr);
+                }  
+                DB::table('cart')->where(['user_id'=>$uid,'user_type'=>'Reg'])->delete();
+                $request->session()->put('ORDER_ID',$order_id);
+
+                $status="success";
+                $msg="Order placed";
+            }else{
+                $status="false";
+                $msg="Please try after sometime";
+            }
+        }else{
+            $status="false";
+            $msg="Please login to place order";
+        }
+        return response()->json(['status'=>$status,'msg'=>$msg]); 
+    }
+
+    public function order_placed(Request $request)
+    {
+        if($request->session()->has('ORDER_ID')){
+            return view('front.order_placed');
+        }else{
+            return redirect('/');
+        }
+    }
  
+    public function order(Request $request)
+    {
+        $result['orders']=DB::table('orders')
+        ->select('orders.*','orders_status.orders_status')
+        ->leftJoin('orders_status','orders_status.id','=','orders.order_status')
+        ->where(['orders.customers_id'=>$request->session()->get('FRONT_USER_ID')])
+        ->get();    
+        return view('front.order',$result);
+    }
+
+    public function order_detail(Request $request,$id)
+    {
+        $result['orders_details']=
+                DB::table('orders_details')
+                ->select('orders.*','orders_details.price','orders_details.qty','products.name as pname','products_attr.attr_image','colors.color','orders_status.orders_status')
+                ->leftJoin('orders','orders.id','=','orders_details.orders_id')
+                ->leftJoin('products_attr','products_attr.id','=','orders_details.products_attr_id')
+                ->leftJoin('products','products.id','=','products_attr.products_id')
+                ->leftJoin('orders_status','orders_status.id','=','orders.order_status')
+                ->leftJoin('colors','colors.id','=','products_attr.color_id')
+                ->where(['orders.id'=>$id])
+                ->where(['orders.customers_id'=>$request->session()->get('FRONT_USER_ID')])
+                ->get();
+        if(!isset($result['orders_details'][0])){
+            return redirect('/');
+        }
+        return view('front.order_detail',$result);
+    }
     
 }

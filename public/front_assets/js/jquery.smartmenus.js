@@ -1,12 +1,4 @@
-/*!
- * SmartMenus jQuery Plugin - v1.0.0 - January 27, 2016
- * http://www.smartmenus.org/
- *
- * Copyright Vasil Dinkov, Vadikom Web Ltd.
- * http://vadikom.com
- *
- * Licensed MIT
- */
+
 
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -33,8 +25,7 @@
 	function initMouseDetection(disable) {
 		var eNS = '.smartmenus_mouse';
 		if (!mouseDetectionEnabled && !disable) {
-			// if we get two consecutive mousemoves within 2 pixels from each other and within 300ms, we assume a real mouse/cursor is present
-			// in practice, this seems like impossible to trick unintentianally with a real mouse and a pretty safe detection on touch devices (even with older browsers that do not support touch events)
+			
 			var firstTime = true,
 				lastMove = null;
 			$(document).bind(getEventsNS([

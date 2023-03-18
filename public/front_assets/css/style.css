@@ -1,39 +1,4 @@
-/*
-  Template Name: Daily Shop
-  Author : MarkUps
-  Author URI: http://www.markups.io/
-  Version: 1.0
-  Tags: light, white, ecommerce, online store, multi page, custom-colors, Bootstrap,responsive, html5, css3, Sass, template, web template
 
-*/
-
-/* Table of Content
-==================================================
-#BASIC TYPOGRAPHY
-#HEADER SECTION
-#NAVBAR SECTION
-#SLIDER SECTION
-#PROMO SECTION
-#PRODUCT SECTION
-#BANNER SECTION
-#POPULAR SECTION
-#SUPPORT SECTION
-#TESTIMONIAL SECTION
-#LATEST BLOG SECTION
-#CLIENT BRAND SECTION
-#PRODUCT PAGE
-#PRODUCT DETAILS PAGE
-#CART VIEW PAGE
-#CHECKOUT PAGE
-#MY ACCOUNT  PAGE
-#BLOG ARCHIVE  PAGE
-#BLOG DETAILS  PAGE
-#CONTACT  PAGE
-#ERROR  PAGE
-#FOOTER SECTION
-#RESPONSIVE DESIGN
-
-*/
 
 /* BASE - Base tyles, Variables, Mixins, etc. */
 body {
@@ -3490,4 +3455,36 @@ h2 {
   font-size: 14px;
   color: green;
   font-weight: bold;
+}
+#coupon_code_msg{
+  color:red;
+}
+
+.remove_coupon_code_link{
+  color:red;
+  font-size: 12px;
+}
+
+#order_place_msg{
+  color:red;
+  font-size: 16px;
+}
+.order_detail{
+  margin-bottom: 10px;
+  font-weight: bold;
+  line-height: 25px;
+}
+
+.coupon_apply_txt{
+  font-size: 14px;
+  color: red;
+}
+
+.order_id_btn{
+  background-color: #ff6666;
+  padding: 14px;
+}
+
+.order_id_btn a{
+  color:white;
 }

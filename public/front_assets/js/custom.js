@@ -108,9 +108,7 @@ jQuery(function($){
               slidesToScroll: 1
             }
           }
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
+          
         ]
     });
     
@@ -147,24 +145,11 @@ jQuery(function($){
               slidesToScroll: 1
             }
           }
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
+          
         ]
     });
 
-  /* ----------------------------------------------------------- */
-  /*  7. TESTIMONIAL SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */     
-    
-    jQuery('.aa-testimonial-slider').slick({
-      dots: true,
-      infinite: true,
-      arrows: false,
-      speed: 300,
-      slidesToShow: 1,
-      adaptiveHeight: true
-    });
+ 
 
   /* ----------------------------------------------------------- */
   /*  8. CLIENT BRAND SLIDER (SLICK SLIDER)
@@ -202,9 +187,7 @@ jQuery(function($){
               slidesToScroll: 1
             }
           }
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
+         
         ]
     });
 
@@ -228,15 +211,15 @@ jQuery(function($){
             range: {
                 'min': 0,
                 '10%': 100,
-                '20%': 300,
-                '30%': 500,
-                '40%': 700,
-                '50%': 900,
-                '60%': 1100,
-                '70%': 1300,
-                '80%': 1500,
-                '90%': 1700,
-                'max': 1900
+                '20%': 1000,
+                '30%': 5000,
+                '40%': 8000,
+                '50%': 1900,
+                '60%': 11000,
+                '70%': 13000,
+                '80%': 15000,
+                '90%': 17000,
+                'max': 500000
             },
             snap: true,
             connect: true,
@@ -333,9 +316,7 @@ jQuery(function($){
             slidesToScroll: 1
           }
         }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
+        
       ]
     }); 
     
@@ -461,24 +442,7 @@ jQuery('#frmRegistration').submit(function(e){
   });
 });
 
-// jQuery('#frmLogin').submit(function(e){
-//   jQuery('#login_msg').html("");
-//   e.preventDefault();
-//   jQuery.ajax({
-//     url:'/login_process',
-//     data:jQuery('#frmLogin').serialize(),
-//     type:'post',
-//     success:function(result){
-//       if(result.status=="error"){
-//         jQuery('#login_msg').html(result.msg);
-//       }
-      
-//       if(result.status=="success"){
-//        window.location.href='/'
-//       }
-//     }
-//   });
-// });
+
 
 
 jQuery('#frmLogin').submit(function(e){
@@ -543,3 +507,20 @@ jQuery('#frmUpdatePassword').submit(function(e){
     }
   });
 });
+
+jQuery('#frmPlaceOrder').submit(function(e){
+  jQuery('#order_place_msg').html("Please wait...");
+  e.preventDefault();
+  jQuery.ajax({
+    url:'/place_order',
+    data:jQuery('#frmPlaceOrder').serialize(),
+    type:'post',
+    success:function(result){
+      if(result.status=='success'){
+          window.location.href="/order_placed";
+      }
+      jQuery('#order_place_msg').html(result.msg);
+    }
+  });
+});
+
