@@ -7,7 +7,7 @@
       <div class="row" style="text-align:center;">
         <br/><br/><br/>
             <h2>Your order has been placed</h2>
-            <!-- <h2>Order Id:- {{session()->get('ORDER_ID')}}</h2> -->
+            <h2>Order Id:- {{session()->get('ORDER_ID')}}</h2>
             <h2>Thanks For Buying</h2>
 
         <br/><br/><br/>

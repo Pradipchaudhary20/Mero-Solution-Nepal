@@ -179,8 +179,7 @@
         return m;
     }
 
-    // Plugins that add properties should also add the key here (null value),
-    // so we can properly clone ourselves.
+   
     var momentProperties = hooks.momentProperties = [];
 
     function copyConfig(to, from) {

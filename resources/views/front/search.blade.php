@@ -6,7 +6,7 @@
 <section id="aa-product-category">
    <div class="container">
       <div class="row">
-         <div class="col-lg-12 col-md-12 col-sm-8">
+         <div class="col-lg-12 col-md-13 col-sm-10">
             <div class="aa-product-catg-content">
                <div class="aa-product-catg-body">
                   <ul class="aa-product-catg">

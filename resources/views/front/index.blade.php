@@ -60,7 +60,7 @@
   </section>
   <!-- / Promo section -->
   <!-- Products section -->
-  <section id="aa-product">
+  <section id="aa-product" class="flexed-product-show">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -88,7 +88,7 @@
                     }
                     @endphp
                     <div class="tab-pane fade {{$cat_class}}" id="cat{{$list->id}}">
-                      <ul class="aa-product-catg">
+                      <ul class="aa-product-catg flex-product-show">
                       @if(isset($home_categories_product[$list->id][0]))
                        @foreach($home_categories_product[$list->id] as $productArr)
                         <li>
@@ -183,7 +183,8 @@
                 
                 <!-- start tranding product category -->
                 <div class="tab-pane fade" id="tranding">
-                 <ul class="aa-product-catg aa-tranding-slider">
+                 <ul class="aa-product-catg aa-featured-slider">
+
                     <!-- start single product item -->
                     @if(isset($home_tranding_product[$list->id][0]))
                        @foreach($home_tranding_product[$list->id] as $productArr)
@@ -211,7 +212,7 @@
 
                 <!-- start discounted product category -->
                 <div class="tab-pane fade" id="discounted">
-                  <ul class="aa-product-catg aa-discounted-slider">
+                  <ul class="aa-product-catg aa-featured-slider">
                     <!-- start single product item -->
                     
                     @if(isset($home_discounted_product[$list->id][0]))

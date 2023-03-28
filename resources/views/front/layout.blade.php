@@ -14,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/nouislider.css')}}">
     <link id="switcher" href="{{asset('front_assets/css/theme-color/default-theme.css')}}" rel="stylesheet">
     <link href="{{asset('front_assets/css/sequence-theme.modern-slide-in.css')}}" rel="stylesheet" media="all">
-    <link href="{{asset('front_assets/css/style.css')}}" rel="stylesheet">    
+    <link href="{{asset('front_assets/css/style.css')}}" rel="stylesheet">   
+    <link href="{{asset('front_assets/css/Pradip.css')}}" rel="stylesheet">    
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>

@@ -80,9 +80,7 @@ sub {
 }
 img {
   border: 0;
-  width: 60%;
 }
-
 svg:not(:root) {
   overflow: hidden;
 }
@@ -125,6 +123,7 @@ button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
+  -webkit-appearance: button;
   cursor: pointer;
 }
 button[disabled],
@@ -183,6 +182,7 @@ td,
 th {
   padding: 0;
 }
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
   *,
   *:before,

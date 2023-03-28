@@ -9,6 +9,9 @@ body {
   overflow-x: hidden;
 }
 
+
+
+
 .no-padding {
   padding: 0;
 }
@@ -87,7 +90,9 @@ h2 {
   text-decoration: none;
   color: #fff;
 }
-
+img {
+    border: none;
+}
 .aa-browse-btn {
   display: inline-block;
   font-size: 16px;
@@ -575,6 +580,8 @@ h2 {
   letter-spacing: 0.5px;
 }
 
+
+
 /*==================
  NAVBAR SECTION
 ====================*/
@@ -582,7 +589,8 @@ h2 {
 #menu {
   display: inline;
   float: left;
-  width: 100%;
+  width: 98%;
+  margin-left: 1%;
 }
 #menu .menu-area {
   float: left;
@@ -772,6 +780,9 @@ h2 {
   float: left;
   display: inline;
   width: 100%;
+}
+#aa-slider ul {
+  width: 98%;
 }
 #aa-slider .aa-slider-area {
   display: inline;
@@ -1115,7 +1126,7 @@ h2 {
   font-size: 16px;
   font-weight: bold;
   left: 0;
-  padding: 12px 10px;
+  padding: 7px 7px;
   position: absolute;
   right: 0;
   text-transform: uppercase;

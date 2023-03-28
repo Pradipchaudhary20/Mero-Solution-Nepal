@@ -1,0 +1,43 @@
+.slick-initialized .slick-slide {
+    height: auto;
+}
+
+#aa-product-category {
+    float: none;
+    display: block;
+    height: max-content;
+}
+#aa-product-category .aa-product-catg-content .aa-product-catg-body .aa-product-catg li{
+    height: max-content;
+}
+
+.aa-product-title,
+.aa-product-price,
+.aa-product-price del{
+    width: 100%;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.aa-product-catg li figure .aa-add-card-btn {
+    bottom: -16px;
+}
+li {
+    list-style: none;
+}
+
+.aa-product-catg {
+    /* display: flex; */
+}
+
+.flexed-product-show{
+display: flex;
+width: 100%;
+justify-content: space-around;
+flex-wrap: wrap;
+}
+
+
+footer {
+    margin-top: 1rem;
+}

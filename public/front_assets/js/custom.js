@@ -336,7 +336,7 @@ function add_to_cart(id,color_str_id){
   jQuery('#add_to_cart_msg').html('');
   var color_id=jQuery('#color_id').val();
   
- 
+  
   if(color_str_id==0){
     color_id='no';
   }
@@ -351,28 +351,34 @@ function add_to_cart(id,color_str_id){
       type:'post',
       success:function(result){
         var totalPrice=0;
-        alert('Product '+result.msg);
-        if(result.totalItem==0){
-           jQuery('.aa-cart-notify').html('0'); 
-           jQuery('.aa-cartbox-summary').remove();
+
+        if(result.msg=='not_avaliable'){
+          alert(result.data);
         }else{
+          alert("Product "+result.msg);
+          if(result.totalItem==0){
+            jQuery('.aa-cart-notify').html('0'); 
+            jQuery('.aa-cartbox-summary').remove();
+         }else{
+           
+           jQuery('.aa-cart-notify').html(result.totalItem); 
+           var html='<ul>';
+           jQuery.each(result.data, function(arrKey,arrVal){
+             totalPrice=parseInt(totalPrice)+(parseInt(arrVal.qty)*parseInt(arrVal.price));
+             html+='<li><a class="aa-cartbox-img" href="#"><img src="'+PRODUCT_IMAGE+'/'+arrVal.image+'" alt="img"></a><div class="aa-cartbox-info"><h4><a href="#">'+arrVal.name+'</a></h4><p> '+arrVal.qty+' * Rs  '+arrVal.price+'</p></div></li>';
+           });
           
-          jQuery('.aa-cart-notify').html(result.totalItem); 
-          var html='<ul>';
-          jQuery.each(result.data, function(arrKey,arrVal){
-            totalPrice=parseInt(totalPrice)+(parseInt(arrVal.qty)*parseInt(arrVal.price));
-            html+='<li><a class="aa-cartbox-img" href="#"><img src="'+PRODUCT_IMAGE+'/'+arrVal.image+'" alt="img"></a><div class="aa-cartbox-info"><h4><a href="#">'+arrVal.name+'</a></h4><p> '+arrVal.qty+' * Rs  '+arrVal.price+'</p></div></li>';
-          });
-         
+         }
+         html+='<li><span class="aa-cartbox-total-title">Total</span><span class="aa-cartbox-total-price">Rs '+totalPrice+'</span></li>';
+         html+='</ul><a class="aa-cartbox-checkout aa-primary-btn" href="cart">Cart</a>';
+         console.log(html);
+         jQuery('.aa-cartbox-summary').html(html);
         }
-        html+='<li><span class="aa-cartbox-total-title">Total</span><span class="aa-cartbox-total-price">Rs '+totalPrice+'</span></li>';
-        html+='</ul><a class="aa-cartbox-checkout aa-primary-btn" href="cart">Cart</a>';
-        console.log(html);
-        jQuery('.aa-cartbox-summary').html(html);
       }
     });
   }
 }
+
 
 function deleteCartProduct(pid,color,attr_id){
   jQuery('#color_id').val(color);
