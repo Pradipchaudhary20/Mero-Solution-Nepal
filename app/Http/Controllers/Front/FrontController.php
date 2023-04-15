@@ -211,7 +211,15 @@ class FrontController extends Controller
                 ->where(['products_attr.products_id'=>$list1->id])
                 ->get();
         }
-        
+
+        $result['product_review']=
+                DB::table('product_review')
+                ->leftJoin('customers','customers.id','=','product_review.customer_id')
+                ->where(['product_review.products_id'=>$result['product'][0]->id])
+                ->where(['product_review.status'=>1])
+                ->orderBy('product_review.added_on','desc')
+                ->select('product_review.rating','product_review.review','product_review.added_on','customers.name')
+                ->get();
         return view('front.product',$result);
     }
 
@@ -239,11 +247,11 @@ class FrontController extends Controller
             ->get();
         $product_attr_id=$result[0]->id;
 
-        $getAvaliableQty=getAvaliableQty($product_id,$product_attr_id);
-        $finalAvaliable=$getAvaliableQty[0]->pqty-$getAvaliableQty[0]->qty;
-        if($pqty>$finalAvaliable){
-            return response()->json(['msg'=>"not_avaliable",'data'=>"Only $finalAvaliable left"]);
-        }
+        // $getAvaliableQty=getAvaliableQty($product_id,$product_attr_id);
+        // $finalAvaliable=$getAvaliableQty[0]->pqty-$getAvaliableQty[0]->qty;
+        // if($pqty>$finalAvaliable){
+        //     return response()->json(['msg'=>"not_avaliable",'data'=>"Only $finalAvaliable left"]);
+        // }
 
         $check=DB::table('cart')
             ->where(['user_id'=>$uid])
@@ -259,9 +267,11 @@ class FrontController extends Controller
                     ->delete();
                 $msg="removed";
             }else{
+                $old_qty= DB::table('cart')
+                ->where(['id'=>$update_id])->value("qty");
                 DB::table('cart')
                     ->where(['id'=>$update_id])
-                    ->update(['qty'=>$pqty]);
+                    ->update(['qty'=>$pqty + $old_qty]);
                 $msg="updated";
             }
             
@@ -597,7 +607,6 @@ class FrontController extends Controller
                 }  
                 DB::table('cart')->where(['user_id'=>$uid,'user_type'=>'Reg'])->delete();
                 $request->session()->put('ORDER_ID',$order_id);
-
                 $status="success";
                 $msg="Order placed";
             }else{
@@ -647,6 +656,101 @@ class FrontController extends Controller
             return redirect('/');
         }
         return view('front.order_detail',$result);
+    }
+    public function apply_coupon_code(Request $request)
+    {
+        $totalPrice=0;
+        $result=DB::table('coupons')  
+            ->where(['code'=>$request->coupon_code])
+            ->get(); 
+        
+        if(isset($result[0])){
+            $value=$result[0]->value;
+            $type=$result[0]->type;
+            $getAddToCartTotalItem=getAddToCartTotalItem();
+            
+            foreach($getAddToCartTotalItem as $list){
+                $totalPrice=$totalPrice+($list->qty*$list->price);
+            }  
+            if($result[0]->status==1){
+                if($result[0]->is_one_time==1){
+                    $status="error";
+                    $msg="Coupon code already used";    
+                }else{
+                    $min_order_amt=$result[0]->min_order_amt;
+                    if($min_order_amt>0){
+                         
+                        if($min_order_amt<$totalPrice){
+                            $status="success";
+                            $msg="Coupon code applied";
+                        }else{
+                            $status="error";
+                            $msg="Cart amount must be greater then $min_order_amt";
+                        }
+                    }else{
+                         $status="success";
+                         $msg="Coupon code applied";
+                    }
+                }
+            }else{
+                $status="error";
+                $msg="Coupon code deactivated";   
+            }
+            
+        }else{
+           $status="error";
+           $msg="Please enter valid coupon code";
+        }
+        
+       
+        if($status=='success'){
+            if($type=='Value'){
+                $totalPrice=$totalPrice-$value;
+            }if($type=='Per'){
+                $newPrice=($value/100)*$totalPrice;
+                $totalPrice=round($totalPrice-$newPrice);
+            }
+        }
+
+        return response()->json(['status'=>$status,'msg'=>$msg,'totalPrice'=>$totalPrice]); 
+    }
+    
+    public function remove_coupon_code(Request $request)
+    {
+        $totalPrice=0;
+        $result=DB::table('coupons')  
+        ->where(['code'=>$request->coupon_code])
+        ->get(); 
+        $getAddToCartTotalItem=getAddToCartTotalItem();
+        $totalPrice=0;
+        foreach($getAddToCartTotalItem as $list){
+            $totalPrice=$totalPrice+($list->qty*$list->price);
+        }  
+        
+        return response()->json(['status'=>'success','msg'=>'Coupon code removed','totalPrice'=>$totalPrice]); 
+    }
+
+    public function product_review_process(Request $request)
+    {
+        if($request->session()->has('FRONT_USER_LOGIN')){
+            $uid=$request->session()->get('FRONT_USER_ID');
+
+            $arr=[
+                "rating"=>$request->rating,
+                "review"=>$request->review,
+                "products_id"=>$request->product_id,
+                "status"=>1,
+                "customer_id"=>$uid,
+                "added_on"=>date('Y-m-d h:i:s')
+            ];
+            $query=DB::table('product_review')->insert($arr);
+            $status="success";
+            $msg="Thank you for providing your review";
+        }else{
+            $status="error";
+            $msg="Please login to submit your review";
+        }
+        return response()->json(['status'=>$status,'msg'=>$msg]); 
     }
     
 }

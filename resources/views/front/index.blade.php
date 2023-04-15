@@ -247,12 +247,11 @@
   </section>
   <!-- / popular section -->
   <!-- Support section -->
-  <section id="aa-support">
+  <!-- <section id="aa-support">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="aa-support-area">
-            <!-- single support -->
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="aa-support-single">
                 <span class="fa fa-truck"></span>
@@ -260,7 +259,6 @@
                 <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.</P>
               </div>
             </div>
-            <!-- single support -->
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="aa-support-single">
                 <span class="fa fa-clock-o"></span>
@@ -268,7 +266,6 @@
                 <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.</P>
               </div>
             </div>
-            <!-- single support -->
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="aa-support-single">
                 <span class="fa fa-phone"></span>
@@ -280,7 +277,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- / Support section -->
   
   <!-- Client Brand -->

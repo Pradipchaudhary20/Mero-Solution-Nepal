@@ -110,7 +110,6 @@ class ProductController extends Controller
         $skuArr=$request->post('sku'); 
         $mrpArr=$request->post('mrp'); 
         $priceArr=$request->post('price'); 
-        // $size_idArr=$request->post('size_id'); 
         $color_idArr=$request->post('color_id'); 
         $qtyArr=$request->post('qty');
         foreach($skuArr as $key=>$val){
@@ -166,11 +165,7 @@ class ProductController extends Controller
              $productAttrArr['mrp']=(int)$mrpArr[$key];
             $productAttrArr['price']=(int)$priceArr[$key];
             $productAttrArr['qty']=(int)$qtyArr[$key];
-            // if($size_idArr[$key]==''){
-            //     $productAttrArr['size_id']=0;
-            // }else{
-            //     $productAttrArr['size_id']=$size_idArr[$key];
-            // }
+            
 
             if($color_idArr[$key]==''){
                 $productAttrArr['color_id']=0;
@@ -185,10 +180,6 @@ class ProductController extends Controller
                 $request->file("attr_image.$key")->storeAs('/public/media',$image_name);
                 $productAttrArr['attr_image']=$image_name;
             }
-            // else{
-            //     $productAttrArr['attr_image']='';
-
-            // }
              if($paidArr[$key]!=''){
                      DB::table('products_attr')->where(['id'=>$paidArr[$key]])->update($productAttrArr);
                 }else{

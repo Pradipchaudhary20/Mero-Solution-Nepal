@@ -43,13 +43,12 @@
                         @endif
                         </td>
                         <td>Rs {{$data->price}}</td>
-                        <td><input id="qty{{$data->attr_id}}" class="aa-cart-quantity" type="number" value="{{$data->qty}}" onchange="updateQty('{{$data->pid}}','{{$data->color}}','{{$data->attr_id}}','{{$data->price}}')"></td>
+                        <td><input min="1" id="qty{{$data->attr_id}}" class="aa-cart-quantity" type="number" value="{{$data->qty}}" onchange="updateQty('{{$data->pid}}','{{$data->color}}','{{$data->attr_id}}','{{$data->price}}')"></td>
                         <td id="total_price_{{$data->attr_id}}">Rs {{$data->price*$data->qty}}</td>
                       </tr>
                       @endforeach
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
-                          
                           <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/checkout')}}"><input class="aa-cart-view-btn" type="button" value="Checkout"></a>
                         </td>
                       </tr>
@@ -60,7 +59,6 @@
                   <h3>Cart empty</h3>
                 @endif  
              </form>
-           
 		   </div>
          </div>
        </div>

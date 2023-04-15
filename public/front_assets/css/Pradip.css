@@ -41,3 +41,8 @@ flex-wrap: wrap;
 footer {
     margin-top: 1rem;
 }
+
+.aa-logo img{
+    height: 90%;
+    width: 25%;
+}

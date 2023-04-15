@@ -10,8 +10,6 @@
      </div>
    </div>
   </section>
-  <!-- / catg header banner section -->         
-
   <section id="cart-view">
    <div class="container">
      <div class="row">
@@ -35,8 +33,6 @@
               <b>Track Details: {{$orders_details[0]->track_details}}</b><br/>
           </div>
       </div>
-     
-
        <div class="col-md-12">
          <div class="cart-view-area">
            <div class="cart-view-table">
@@ -90,15 +86,12 @@
                           <td>'.$totalAmt.'</td>
                         </tr>';
                       }
-                      
-                      
                       ?>
                     </tbody>
                   </table>
                 </div>
              </form>
              <!-- Cart Total view -->
-           
 		   </div>
          </div>
        </div>

@@ -23,8 +23,8 @@
                      {{$sort_txt}}
                   </div>
                   <div class="aa-product-catg-head-right">
-                     <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
-                     <a id="list-catg" href="#"><span class="fa fa-list"></span></a>
+                     <!-- <a id="grid-catg" href="#"><span class="fa fa-th"></span></a> -->
+                     <!-- <a id="list-catg" href="#"><span class="fa fa-list"></span></a> -->
                   </div>
                </div>
                <div class="aa-product-catg-body">

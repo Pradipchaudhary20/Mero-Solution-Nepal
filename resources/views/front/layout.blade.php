@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
+  <script>
+    (function() {
+      var currentPage = window.location.href;
+      console.log("Script Run")
+
+      if (currentPage === 'http://127.0.0.1:8000/order_placed') {
+        console.log("Url Matched")
+        history.pushState({}, '');
+        window.addEventListener('unload', function(event) {
+          console.log("Sucess")
+          window.location.href = 'http://127.0.0.1:8000';
+        });
+      }
+    })();
+  </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
@@ -9,7 +23,7 @@
     <link href="{{asset('front_assets/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{asset('front_assets/css/bootstrap.css')}}" rel="stylesheet">   
     <link href="{{asset('front_assets/css/jquery.smartmenus.bootstrap.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/jquery.simpleLens.css')}}">    
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/jquery.simpleLens.css')}}">     -->
     <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/slick.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/nouislider.css')}}">
     <link id="switcher" href="{{asset('front_assets/css/theme-color/default-theme.css')}}" rel="stylesheet">
@@ -23,9 +37,11 @@
     
 
    
-    <script>
+    <!-- <script>
     var PRODUCT_IMAGE="{{asset('storage/media/')}}";
-    </script>
+    </script> -->
+
+   
 
   </head>
   <body class="productPage"> 
@@ -84,10 +100,8 @@
                 <a href="{{url('/')}}">
                   <p>Mero Solution Nepal <span>Your Shopping Partner</span></p>
                 </a>
-                <!-- img based logo -->
-                <!-- <a href="javascript:void(0)"><img src="img/logo.jpg" alt="logo img"></a> -->
+                <!-- <a href="{{url('/')}}"><img src="{{asset('front_assets/img/logo.png')}}" alt=""></a> -->
               </div>
-              <!-- / logo  -->
                <!-- cart box -->
               @php
               $getAddToCartTotalItem=getAddToCartTotalItem();
@@ -127,7 +141,6 @@
                     </li>
                   </ul>
                   <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/cart')}}">Cart</a>
-               
                 @endif
                 </div>
               </div>
@@ -139,7 +152,6 @@
                   <button type="button" onclick="funSearch()"><span class="fa fa-search"></span></button>
                 </form>
               </div>
-              <!-- / search box -->              
             </div>
           </div>
         </div>
@@ -207,7 +219,6 @@
                       <li><a href="#">Returns</a></li>
                       <li><a href="#">Services</a></li>
                       <li><a href="#">Discount</a></li>
-                      <li><a href="#">Special Offer</a></li>
                     </ul>
                   </div>
                 </div>
@@ -219,9 +230,7 @@
                     <ul class="aa-footer-nav">
                       <li><a href="#">Site Map</a></li>
                       <li><a href="#">Search</a></li>
-                      <li><a href="#">Advanced Search</a></li>
                       <li><a href="#">Suppliers</a></li>
-                      <li><a href="#">FAQ</a></li>
                     </ul>
                   </div>
                 </div>
@@ -305,14 +314,16 @@
   </div>    
 
   <!-- jQuery library -->
+  <!-- <script src="{{asset('front_assets/js/index.js')}}"></script>  -->
+  <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="{{asset('front_assets/js/bootstrap.js')}}"></script>  
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.bootstrap.js')}}"></script>  
   <script src="{{asset('front_assets/js/sequence.js')}}"></script>
   <script src="{{asset('front_assets/js/sequence-theme.modern-slide-in.js')}}"></script>  
-  <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleGallery.js')}}"></script>
-  <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleLens.js')}}"></script>
+  <!-- <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleGallery.js')}}"></script> -->
+  <!-- <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleLens.js')}}"></script> -->
   <script type="text/javascript" src="{{asset('front_assets/js/slick.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/nouislider.js')}}"></script>
   <script src="{{asset('front_assets/js/custom.js')}}"></script> 

@@ -20,7 +20,6 @@ class BrandController extends Controller
     {
         if($id>0){
             $arr=Brand::where(['id'=>$id])->get(); 
-
             $result['name']=$arr['0']->name;
             $result['image']=$arr['0']->image;
             $result['is_home']=$arr['0']->is_home;

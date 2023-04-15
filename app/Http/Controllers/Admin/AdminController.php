@@ -27,25 +27,10 @@ class AdminController extends Controller
 
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    
     public function auth(Request $request)
     {
         $email=$request->post('email');
         $password=$request->post('password');
-        // echo "$email"."$password";
-        // $result=Admin::where(['email'=>$email,'password'=>$password])->get();
         $result=Admin::where(['email'=>$email])->first();
         if($result){
             if(Hash::check($request->post('password'),$result->password)){

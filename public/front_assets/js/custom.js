@@ -3,9 +3,7 @@
 jQuery(function($){
 
 
-  /* ----------------------------------------------------------- */
-  /*  1. CARTBOX 
-  /* ----------------------------------------------------------- */
+ 
     
      jQuery(".aa-cartbox").hover(function(){
       jQuery(this).find(".aa-cartbox-summary").fadeIn(500);
@@ -15,27 +13,11 @@ jQuery(function($){
       }
      );   
   
-  /* ----------------------------------------------------------- */
-  /*  2. TOOLTIP
-  /* ----------------------------------------------------------- */    
+
     jQuery('[data-toggle="tooltip"]').tooltip();
     jQuery('[data-toggle2="tooltip"]').tooltip();
 
-  /* ----------------------------------------------------------- */
-  /*  3. PRODUCT VIEW SLIDER 
-  /* ----------------------------------------------------------- */    
-
-    jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
-        loading_image: 'demo/images/loading.gif'
-    });
-
-    jQuery('#demo-1 .simpleLens-big-image').simpleLens({
-        loading_image: 'demo/images/loading.gif'
-    });
-
-  /* ----------------------------------------------------------- */
-  /*  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+     
 
     jQuery('.aa-popular-slider').slick({
       dots: false,
@@ -67,16 +49,11 @@ jQuery(function($){
             slidesToScroll: 1
           }
         }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
       ]
     }); 
 
   
-  /* ----------------------------------------------------------- */
-  /*  5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+       
 
     jQuery('.aa-featured-slider').slick({
         dots: false,
@@ -112,9 +89,7 @@ jQuery(function($){
         ]
     });
     
-  /* ----------------------------------------------------------- */
-  /*  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+       
     jQuery('.aa-latest-slider').slick({
         dots: false,
         infinite: false,
@@ -149,47 +124,6 @@ jQuery(function($){
         ]
     });
 
- 
-
-  /* ----------------------------------------------------------- */
-  /*  8. CLIENT BRAND SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */  
-
-    jQuery('.aa-client-brand-slider').slick({
-        dots: false,
-        infinite: false,
-        speed: 300,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 4,
-              infinite: true,
-              dots: true
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-         
-        ]
-    });
 
   /* ----------------------------------------------------------- */
   /*  9. PRICE SLIDER  (noUiSlider SLIDER)
@@ -210,16 +144,16 @@ jQuery(function($){
         noUiSlider.create(skipSlider, {
             range: {
                 'min': 0,
-                '10%': 100,
-                '20%': 1000,
-                '30%': 5000,
-                '40%': 8000,
-                '50%': 1900,
-                '60%': 11000,
-                '70%': 13000,
-                '80%': 15000,
-                '90%': 17000,
-                'max': 500000
+                '10%': 1000,
+                '20%': 10000,
+                '30%': 30000,
+                '40%': 50000,
+                '50%': 80000,
+                '60%': 100000,
+                '70%': 150000,
+                '80%': 500000,
+                '90%': 1000000,
+                'max': 2000000
             },
             snap: true,
             connect: true,
@@ -239,9 +173,7 @@ jQuery(function($){
 
 
     
-  /* ----------------------------------------------------------- */
-  /*  10. SCROLL TOP BUTTON
-  /* ----------------------------------------------------------- */
+  //10. SCROLL TOP BUTTON
 
   //Check to see if the window is top if not then display button
 
@@ -260,17 +192,13 @@ jQuery(function($){
       return false;
     });
   
-  /* ----------------------------------------------------------- */
-  /*  11. PRELOADER
-  /* ----------------------------------------------------------- */
+  /*  11. PRELOADER */
 
     jQuery(window).load(function() { // makes sure the whole site is loaded      
       jQuery('#wpf-loader-two').delay(200).fadeOut('slow'); // will fade out      
     })
 
-  /* ----------------------------------------------------------- */
-  /*  12. GRID AND LIST LAYOUT CHANGER 
-  /* ----------------------------------------------------------- */
+  /*  12. GRID AND LIST LAYOUT CHANGER */
 
   jQuery("#list-catg").click(function(e){
     e.preventDefault(e);
@@ -282,9 +210,7 @@ jQuery(function($){
   });
 
 
-  /* ----------------------------------------------------------- */
-  /*  13. RELATED ITEM SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+  /*  13. RELATED ITEM SLIDER (SLICK SLIDER) */
 
     jQuery('.aa-related-item-slider').slick({
       dots: false,
@@ -332,11 +258,9 @@ function home_add_to_cart(id,color_str_id){
   jQuery('#color_id').val(color_str_id);
   add_to_cart(id,color_str_id);
 }
-function add_to_cart(id,color_str_id){
+function add_to_cart(id,color_str_id,_type="new"){
   jQuery('#add_to_cart_msg').html('');
   var color_id=jQuery('#color_id').val();
-  
-  
   if(color_str_id==0){
     color_id='no';
   }
@@ -391,7 +315,7 @@ function updateQty(pid,color,attr_id,price){
   jQuery('#color_id').val(color);
   var qty=jQuery('#qty'+attr_id).val();
   jQuery('#qty').val(qty)
-  add_to_cart(pid,color);
+  add_to_cart(pid,color,"change");
   jQuery('#total_price_'+attr_id).html('Rs '+qty*price);
 }
 
@@ -448,9 +372,6 @@ jQuery('#frmRegistration').submit(function(e){
   });
 });
 
-
-
-
 jQuery('#frmLogin').submit(function(e){
   jQuery('#login_msg').html("");
   e.preventDefault();
@@ -498,6 +419,7 @@ jQuery('#frmForgot').submit(function(e){
   });
 });
 
+
 jQuery('#frmUpdatePassword').submit(function(e){
   jQuery('#thank_you_msg').html("Please wait...");
   jQuery('#thank_you_msg').html("");
@@ -513,6 +435,39 @@ jQuery('#frmUpdatePassword').submit(function(e){
     }
   });
 });
+var config = {
+  // replace the publicKey with yours
+  "publicKey": "test_public_key_8b563a69ce684c3a90d669b6f42d1b1a",
+  "productIdentity": "1234567890",
+  "productName": "Dragon",
+  "productUrl": "http://127.0.0.1:8000/product/Iphone%2013",
+  "paymentPreference": [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+      ],
+  "eventHandler": {
+      onSuccess (payload) {
+          // hit merchant api for initiating verfication
+          console.log(payload);
+      },
+      onError (error) {
+          console.log(error);
+      },
+      onClose () {
+          console.log('widget is closing');
+      }
+  }
+};
+
+var checkout = new KhaltiCheckout(config);
+var btn = document.getElementById("payment-button");
+btn.onclick = function () {
+  // minimum transaction amount must be 10, i.e 1000 in paisa.
+  checkout.show({amount: 1000});
+}
 
 jQuery('#frmPlaceOrder').submit(function(e){
   jQuery('#order_place_msg').html("Please wait...");
@@ -529,4 +484,90 @@ jQuery('#frmPlaceOrder').submit(function(e){
     }
   });
 });
+function applyCouponCode(){
+  jQuery('#coupon_code_msg').html('');
+  var coupon_code=jQuery('#coupon_code').val();
+  if(coupon_code!=''){
+    jQuery.ajax({
+      type:'post',
+      url:'/apply_coupon_code',
+      data:'coupon_code='+coupon_code+'&_token='+jQuery("[name='_token']").val(),
+      success:function(result){
+        console.log(result.status);
+        if(result.status=='success'){
+          jQuery('.show_coupon_box').removeClass('hide');
+          jQuery('#coupon_code_str').html(coupon_code);
+          jQuery('#total_price').html('Rs '+result.totalPrice);
+          jQuery('.apply_coupon_code_box').hide();
+        }else{
+          
+        }
+        jQuery('#coupon_code_msg').html(result.msg);
+      }
+    });
+  }else{
+    jQuery('#coupon_code_msg').html('Please enter coupon code');
+  }
+}
 
+function remove_coupon_code(){
+  jQuery('#coupon_code_msg').html('');
+  var coupon_code=jQuery('#coupon_code').val();
+  jQuery('#coupon_code').val('');
+  if(coupon_code!=''){
+    jQuery.ajax({
+      type:'post',
+      url:'/remove_coupon_code',
+      data:'coupon_code='+coupon_code+'&_token='+jQuery("[name='_token']").val(),
+      success:function(result){
+        if(result.status=='success'){
+          jQuery('.show_coupon_box').addClass('hide');
+          jQuery('#coupon_code_str').html('');
+          jQuery('#total_price').html('Rs '+result.totalPrice);
+          jQuery('.apply_coupon_code_box').show();
+        }else{
+          
+        }
+        jQuery('#coupon_code_msg').html(result.msg);
+      }
+    });
+  }
+}
+jQuery('#frmProductReview').submit(function(e){
+  e.preventDefault();
+  jQuery.ajax({
+    url:'/product_review_process',
+    data:jQuery('#frmProductReview').serialize(),
+    type:'post',
+    success:function(result){
+      if(result.status=="success"){
+        jQuery('.review_msg').html(result.msg);
+        jQuery('#frmProductReview')[0].reset();
+        setInterval(function(){
+          window.location.href=window.location.href
+        },3000);
+      }if(result.status=="error"){
+        jQuery('.review_msg').html(result.msg)
+      }
+      //jQuery('#frmUpdatePassword')[0].reset();
+      //jQuery('#thank_you_msg').html(result.msg);
+    }
+  });
+});
+
+// function redirectToURLOnBack(targetURL, redirectTo) {
+//   if (window.location.href === targetURL) {
+//     // Add a dummy history entry to ensure the popstate event is fired
+//     history.pushState({}, '');
+//     console.log('hello')
+//     // Listen for the popstate event
+//     window.addEventListener('popstate', function (event) {
+//       // Redirect to the specified URL
+//       window.location.href = redirectTo;
+//     });
+//   }
+// }
+
+// // Usage
+// // Replace the URLs with your specific URLs
+// redirectToURLOnBack('', 'http://127.0.0.1:8000');
